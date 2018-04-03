@@ -18,7 +18,8 @@ class VerifyUser extends Mailable
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param $name
+     * @param $authorizationCode
      */
     public function __construct($name, $authorizationCode)
     {
