@@ -19,10 +19,11 @@
 //});
 
 //Auth controls.
-Route::group(['namespace' => 'Api\V1\Auth'], function() {
+Route::group(['namespace' => 'Api\V1\Access'], function() {
     Route::post('/v1/register', 'RegisterController@register')->name('api.register');
     Route::post('/v1/login', 'LoginController@login')->name('api.login');
     Route::post('/v1/activate', 'ActivateController@activate')->name('api.activate');
+    Route::post('/v1/activate/resend', 'ActivateController@resendActivationCode')->name('api.activate.resend');
 });
 
 //Authenticated user.

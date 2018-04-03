@@ -9,7 +9,7 @@
 @endcomponent
 
 @component('mail::button', ['url' => route('api.login')])
-Google
+Login
 @endcomponent
 
 Thanks,<br>
