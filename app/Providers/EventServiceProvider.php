@@ -13,6 +13,14 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        'Laravel\Passport\Events\AccessTokenCreated' => [
+            'App\Listeners\RevokeOldTokens',
+        ],
+
+        'Laravel\Passport\Events\RefreshTokenCreated' => [
+            'App\Listeners\PruneOldTokens',
+        ],
+
         'App\Events\Event' => [
             'App\Listeners\EventListener',
         ],

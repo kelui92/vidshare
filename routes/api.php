@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
+//use App\Http\Controllers\Api;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,19 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+//Auth controls.
+Route::group(['namespace' => 'Api\V1\Auth'], function() {
+    Route::post('/v1/register', 'RegisterController@register')->name('api.register');
+    Route::post('/v1/login', 'LoginController@login')->name('api.login');
+    Route::post('/v1/activate', 'ActivateController@activate')->name('api.activate');
 });
+
+//Authenticated user.
+Route::group(['namespace' => 'Api\V1\Authenticated'], function() {
+    Route::middleware('auth:api')->get('/v1/dashboard', 'DashboardController@index');
+});
+
