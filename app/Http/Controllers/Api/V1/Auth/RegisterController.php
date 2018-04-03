@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1\Auth;
 
+use App\Mail\VerifyUser;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -33,8 +35,8 @@ class RegisterController extends Controller
      */
     protected function register(Request $request)
     {
+        //TODO: refactor this.
         $data = $request->all();
-
         $validatorCheck = $this->validator($data);
 
         //return any validation check messages.
@@ -42,14 +44,18 @@ class RegisterController extends Controller
             return response()->json(["message"=>$validatorCheck->errors()], 422);
         }
 
+        $authorizationCode = str_random(7);
+
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'authorization_code' => $authorizationCode
         ]);
 
-        //TODO: Send email authorization code.
-        return $user;
+
+        Mail::to($data['email'])->send(new VerifyUser($data['name'], $authorizationCode));
+        return response()->json(["message"=>"An email with a verification code has been sent."], 200);
 
     }
 }

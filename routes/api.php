@@ -20,8 +20,9 @@
 
 //Auth controls.
 Route::group(['namespace' => 'Api\V1\Auth'], function() {
-    Route::post('/v1/register', 'RegisterController@register');
-    Route::post('/v1/login', 'LoginController@login');
+    Route::post('/v1/register', 'RegisterController@register')->name('api.register');
+    Route::post('/v1/login', 'LoginController@login')->name('api.login');
+    Route::post('/v1/activate', 'ActivateController@activate')->name('api.activate');
 });
 
 //Authenticated user.
